@@ -40,46 +40,22 @@ module.exports = function moduleDependents(name, options) {
   npm.use(utils.dependents());
 
   return utils.co(function* () {
-    var retries = {};
-    var queue = new utils.Queue();
-
     var repos = yield npm.repo(name).dependents({mapFn: mapFn});
-    repos.forEach(queue.push);
+    var results = yield repos.map(function(repo) {
+      return repo.package();
+    });
 
-    var results = [];
-    while (queue.buf.length) {
-      var repo = yield queue.next();
-
-      try {
-        var obj = { name: repo.name };
-        if (typeof opts.transform === 'function') {
-          var pkg = yield repo.package();
-          obj = opts.transform(repo.name, pkg);
-        }
-        results.push(obj);
-      } catch (err) {
-        if (retries[repo.name] && retries[repo.name] > 3) {
-          console.error(repo.name, err);
-        } else {
-          retries[repo.name] = (retries[repo.name] || 0) + 1;
-          queue.push(repo);
-        }
-      }
-
+    if (typeof opts.transform === 'function') {
+      return results.map(function(pkg) {
+        return opts.transform(pkg.name, pkg);
+      });
     }
     return results;
   });
 };
 
 function transform(name, pkg) {
-  var result = {
-    name: name,
-    author: pkg.author,
-    repository: pkg.repository,
-    homepage: pkg.homepage,
-    bugs: pkg.bugs
-  };
-  return result;
+  return pkg;
 }
 
 function mapFn(name) {
