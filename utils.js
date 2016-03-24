@@ -25,7 +25,6 @@ require = utils;
  */
 
 require('co');
-require('co-queue', 'Queue');
 require('extend-shallow', 'extend');
 require('npm-api', 'npm');
 require('npm-api-dependents', 'dependents');

@@ -22,10 +22,9 @@
   },
   "dependencies": {
     "co": "^4.6.0",
-    "co-queue": "^2.0.0",
     "extend-shallow": "^2.0.1",
     "lazy-cache": "^1.0.3",
-    "npm-api": "^0.4.3",
+    "npm-api": "^0.4.4",
     "npm-api-dependents": "^0.1.0"
   },
   "devDependencies": {
