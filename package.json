@@ -10,7 +10,8 @@
   },
   "license": "MIT",
   "files": [
-    "index.js"
+    "index.js",
+    "utils.js"
   ],
   "main": "index.js",
   "engines": {
@@ -19,10 +20,57 @@
   "scripts": {
     "test": "mocha"
   },
-  "dependencies": {},
+  "dependencies": {
+    "co": "^4.6.0",
+    "co-queue": "^2.0.0",
+    "extend-shallow": "^2.0.1",
+    "lazy-cache": "^1.0.3",
+    "npm-api": "^0.4.3",
+    "npm-api-dependents": "^0.1.0"
+  },
   "devDependencies": {
+    "gulp-format-md": "^0.1.7",
     "mocha": "*",
+    "right-pad-keys": "^0.1.2",
     "should": "*"
   },
-  "keywords": []
+  "keywords": [
+    "api",
+    "dependent",
+    "dependents",
+    "module",
+    "module-dependents",
+    "modules",
+    "npm",
+    "npm-api",
+    "package",
+    "package-dependents",
+    "packages",
+    "repo",
+    "repo-dependents",
+    "repos"
+  ],
+  "verb": {
+    "run": true,
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "related": {
+      "list": [
+        "npm-api",
+        "npm-api-dependents"
+      ]
+    },
+    "reflinks": [
+      "verb"
+    ],
+    "lint": {
+      "reflinks": true
+    }
+  }
 }
