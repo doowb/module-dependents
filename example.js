@@ -6,7 +6,7 @@ var pad = require('right-pad-keys');
 var dependents = require('./');
 
 co(function* () {
-  var repos = yield dependents('object.pick');
+  var repos = yield dependents('lazy-cache');
   var results = {};
 
   repos.forEach(function(repo) {
@@ -16,4 +16,8 @@ co(function* () {
   Object.keys(results).forEach(function(key) {
     console.log(key, results[key]);
   });
+}).then(function() {
+  console.log('done');
+}, function(err) {
+  console.error(err);
 });
