@@ -23,15 +23,14 @@
   "dependencies": {
     "co": "^4.6.0",
     "extend-shallow": "^2.0.1",
-    "lazy-cache": "^1.0.3",
-    "npm-api": "^0.4.4",
+    "lazy-cache": "^2.0.1",
+    "npm-api": "^0.4.6",
     "npm-api-dependents": "^0.1.0"
   },
   "devDependencies": {
-    "gulp-format-md": "^0.1.7",
-    "mocha": "*",
-    "right-pad-keys": "^0.1.2",
-    "should": "*"
+    "gulp-format-md": "^0.1.9",
+    "mocha": "^2.5.3",
+    "right-pad-keys": "^0.1.2"
   },
   "keywords": [
     "api",
@@ -66,7 +65,9 @@
       ]
     },
     "reflinks": [
-      "verb"
+      "verb",
+      "npm-api",
+      "verb-generate-readme"
     ],
     "lint": {
       "reflinks": true
