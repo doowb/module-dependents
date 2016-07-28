@@ -1,4 +1,4 @@
-# module-dependents [![NPM version](https://img.shields.io/npm/v/module-dependents.svg?style=flat)](https://www.npmjs.com/package/module-dependents) [![NPM downloads](https://img.shields.io/npm/dm/module-dependents.svg?style=flat)](https://npmjs.org/package/module-dependents)
+# module-dependents [![NPM version](https://img.shields.io/npm/v/module-dependents.svg?style=flat)](https://www.npmjs.com/package/module-dependents) [![NPM downloads](https://img.shields.io/npm/dm/module-dependents.svg?style=flat)](https://npmjs.org/package/module-dependents) [![Build Status](https://img.shields.io/travis/doowb/module-dependents.svg?style=flat)](https://travis-ci.org/doowb/module-dependents)
 
 Retrieve list of dependents for an npm module.
 
@@ -26,7 +26,7 @@ Retrieve a list of dependent modules given a module name.
 
 * `name` **{String}**: Name of module to retrieve dependents for.
 * `options` **{Object}**: Options to control what data is retrieved.
-* `options.transform` **{Function}**: Optional transform function that takes module name and package.json object.
+* `options.transform` **{Function}**: Optional transform function that takes module name, the package.json object and the current instance of [npm-api](https://github.com/doowb/npm-api) allow more advanced data gather.
 * `returns` **{Promise}**: Returns array of objects with module information when promise is resolved.
 
 **Example**
@@ -51,8 +51,8 @@ co(function* () {
 
 ### Related projects
 
-* [npm-api-dependents](https://www.npmjs.com/package/npm-api-dependents): npm-api plugin for getting module dependents. | [homepage](https://github.com/doowb/npm-api-dependents)
-* [npm-api](https://www.npmjs.com/package/npm-api): Base class for retrieving data from the npm registry. | [homepage](https://github.com/doowb/npm-api)
+* [npm-api-dependents](https://www.npmjs.com/package/npm-api-dependents): npm-api plugin for getting module dependents. | [homepage](https://github.com/doowb/npm-api-dependents "npm-api plugin for getting module dependents.")
+* [npm-api](https://www.npmjs.com/package/npm-api): Base class for retrieving data from the npm registry. | [homepage](https://github.com/doowb/npm-api "Base class for retrieving data from the npm registry.")
 
 ### Contributing
 
