@@ -47,7 +47,7 @@ module.exports = function moduleDependents(name, options) {
 
     if (typeof opts.transform === 'function') {
       return yield results.map(function(pkg) {
-        return opts.transform(pkg.name, pkg);
+        return opts.transform(pkg.name, pkg, npm);
       });
     }
     return results;
