@@ -29,12 +29,16 @@ var utils = require('./utils');
  * ```
  * @param  {String} `name` Name of module to retrieve dependents for.
  * @param  {Object} `options` Options to control what data is retrieved.
- * @param  {Function} `options.transform` Optional transform function that takes module name and package.json object.
+ * @param  {Function} `options.transform` Optional transform function that takes module name, the package.json object and the current instance of [npm-api][] allow more advanced data gather.
  * @return {Promise} Returns array of objects with module information when promise is resolved.
  * @api public
  */
 
 module.exports = function moduleDependents(name, options) {
+  if (typeof name !== 'string') {
+    throw new TypeError('expected "name" to be a string');
+  }
+
   var opts = utils.extend({transform: transform}, options);
   var npm = utils.npm();
   npm.use(utils.dependents());
