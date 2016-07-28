@@ -46,7 +46,7 @@ module.exports = function moduleDependents(name, options) {
     });
 
     if (typeof opts.transform === 'function') {
-      return results.map(function(pkg) {
+      return yield results.map(function(pkg) {
         return opts.transform(pkg.name, pkg);
       });
     }
