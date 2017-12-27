@@ -1,8 +1,8 @@
 /*!
  * module-dependents <https://github.com/doowb/module-dependents>
  *
- * Copyright (c) 2016, Brian Woodward.
- * Licensed under the MIT License.
+ * Copyright (c) 2016-2017, Brian Woodward.
+ * Released under the MIT License.
  */
 
 'use strict';
