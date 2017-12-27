@@ -1,11 +1,14 @@
 'use strict';
 
 require('mocha');
-var assert = require('assert');
-var moduleDependents = require('./');
+const assert = require('assert');
+const isPlainObject = require('is-plain-object');
+
+const moduleDependents = require('./');
 
 describe('module-dependents', function() {
   this.timeout(10000);
+
   it('should export a function', function() {
     assert.equal(typeof moduleDependents, 'function');
   });
@@ -21,85 +24,31 @@ describe('module-dependents', function() {
     }
   });
 
-  it('should return a promise', function(cb) {
+  it('should return a stream', function(cb) {
+    let count = 0;
     moduleDependents('module-dependents')
-      .then(function(dependents) {
-        try {
-          assert(dependents);
-          cb();
-        } catch (err) {
-          cb(err);
-        }
-      }, cb);
+      .on('data', function(dependent) {
+        assert(dependent);
+        count++;
+      })
+      .once('error', cb)
+      .once('end', function() {
+        assert(count > 0, 'Expected count to be greater than 0.');
+        cb();
+      });
   });
 
-  it('should return an array of dependent package.json objects', function(cb) {
-    moduleDependents('module-dependents')
-      .then(function(dependents) {
-        try {
-          assert(dependents);
-          assert(Array.isArray(dependents));
-          assert(dependents[0]);
-          assert.equal(typeof dependents[0].name, 'string');
-          assert.equal(typeof dependents[0].dependencies, 'object');
-          cb();
-        } catch (err) {
-          cb(err);
-        }
-      }, cb);
-  });
-
-  it('should allow a custom `transform` function to transform the package.json objects', function(cb) {
-    var names = [];
-    moduleDependents('module-dependents', {
-      transform: function(name, pkg, npm) {
-        assert(name);
-        assert(pkg);
-        assert(npm);
-        assert.equal(typeof name, 'string');
-        assert.equal(typeof pkg, 'object');
-        assert.equal(typeof npm, 'object');
-        assert.equal(pkg.name, name);
-        names.push({name: name});
-        return {name: name};
-      }
-    })
-    .then(function(dependents) {
-      try {
-        assert(dependents);
-        assert(Array.isArray(dependents));
-        assert.equal(typeof dependents[0].name, 'string');
-        assert.equal(typeof dependents[0].dependencies, 'undefined');
-        assert.deepEqual(dependents, names);
+  it('should allow passing `options.raw` through to npm-api-dependents', function(cb) {
+    let count = 0;
+    moduleDependents('module-dependents', {raw: true})
+      .on('data', function(dependent) {
+        assert(isPlainObject(dependent));
+        count++;
+      })
+      .once('error', cb)
+      .once('end', function() {
+        assert(count > 0, 'Expected count to be greater than 0.');
         cb();
-      } catch (err) {
-        cb(err);
-      }
-    }, cb);
-  });
-
-  it('should handle errors thrown in the `transform` function', function(cb) {
-    var names = [];
-    moduleDependents('module-dependents', {
-      transform: function(name, pkg, npm) {
-        throw new Error('transform error');
-      }
-    })
-    .then(function(dependents) {
-      try {
-        assert(!dependents, 'expected an error');
-        cb();
-      } catch (err) {
-        cb(err);
-      }
-    }, function(err) {
-      try {
-        assert(err);
-        assert.equal(err.message, 'transform error');
-        cb();
-      } catch (err2) {
-        cb(err2);
-      }
-    });
+      });
   });
 });

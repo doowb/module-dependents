@@ -7,30 +7,24 @@
 
 'use strict';
 
-var utils = require('./utils');
+const NpmApi = require('npm-api');
+const extend = require('extend-shallow');
+const dependents = require('npm-api-dependents');
 
 /**
- * Retrieve a list of dependent modules given a module name.
+ * Get the list of npm modules that depend on any other npm module.
  *
  * ```js
- * // returns a Promise
+ * // returns a stream
  * moduleDependents('micromatch')
- *   .then(function(dependents) {
- *     console.log(dependents);
- *   }, function(err) {
- *     console.error(err);
+ *   .on('data', function(dependent) {
+ *     console.log(dependent.name);
  *   });
- *
- * // using co and a generator function
- * co(function* () {
- *   var dependents = yield moduleDependents();
- *   console.log(dependents);
- * });
  * ```
  * @param  {String} `name` Name of module to retrieve dependents for.
- * @param  {Object} `options` Options to control what data is retrieved.
- * @param  {Function} `options.transform` Optional transform function that takes module name, the package.json object and the current instance of [npm-api][] allow more advanced data gather.
- * @return {Promise} Returns array of objects with module information when promise is resolved.
+ * @param  {Object} `options` Options to pass along to [npm-api-dependents][]
+ * @param  {Function} `options.raw` Optionally specify to get a raw object with a `name` property for each dependent.
+ * @return {Stream} Returns an object stream with each object being an instance of `Repo` from the [npm-api][] module.
  * @api public
  */
 
@@ -39,29 +33,10 @@ module.exports = function moduleDependents(name, options) {
     throw new TypeError('expected "name" to be a string');
   }
 
-  var opts = utils.extend({transform: transform}, options);
-  var npm = utils.npm();
-  npm.use(utils.dependents());
+  const opts = extend({}, options);
+  const npm = new NpmApi();
+  npm.use(dependents());
 
-  return utils.co(function* () {
-    var repos = yield npm.repo(name).dependents({mapFn: mapFn});
-    var results = yield repos.map(function(repo) {
-      return repo.package();
-    });
-
-    if (typeof opts.transform === 'function') {
-      return yield results.map(function(pkg) {
-        return opts.transform(pkg.name, pkg, npm);
-      });
-    }
-    return results;
-  });
+  const repo = npm.repo(name);
+  return repo.dependents(opts);
 };
-
-function transform(name, pkg) {
-  return pkg;
-}
-
-function mapFn(name) {
-  return this.repo(name);
-}

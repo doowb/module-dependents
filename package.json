@@ -10,8 +10,7 @@
   },
   "license": "MIT",
   "files": [
-    "index.js",
-    "utils.js"
+    "index.js"
   ],
   "main": "index.js",
   "engines": {
@@ -21,16 +20,16 @@
     "test": "mocha"
   },
   "dependencies": {
-    "co": "^4.6.0",
-    "extend-shallow": "^2.0.1",
-    "lazy-cache": "^2.0.1",
-    "npm-api": "^0.4.6",
-    "npm-api-dependents": "^0.1.0"
+    "extend-shallow": "^3.0.2",
+    "npm-api": "^0.4.10",
+    "npm-api-dependents": "^1.0.0"
   },
   "devDependencies": {
     "gulp-format-md": "^0.1.9",
+    "is-plain-object": "^2.0.4",
     "mocha": "^2.5.3",
-    "right-pad-keys": "^0.1.2"
+    "right-pad-keys": "^0.1.2",
+    "through2": "^2.0.3"
   },
   "keywords": [
     "api",
