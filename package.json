@@ -25,9 +25,9 @@
     "npm-api-dependents": "^1.0.0"
   },
   "devDependencies": {
-    "gulp-format-md": "^0.1.9",
+    "gulp-format-md": "^1.0.0",
     "is-plain-object": "^2.0.4",
-    "mocha": "^2.5.3",
+    "mocha": "3.5.3",
     "right-pad-keys": "^0.1.2",
     "through2": "^2.0.3"
   },
