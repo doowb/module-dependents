@@ -1,6 +1,6 @@
 {
   "name": "module-dependents",
-  "description": "Retrieve list of dependents for an npm module.",
+  "description": "Get the list of npm modules that depend on any other npm module.",
   "version": "0.1.4",
   "homepage": "https://github.com/doowb/module-dependents",
   "author": "Brian Woodward (https://github.com/doowb)",
